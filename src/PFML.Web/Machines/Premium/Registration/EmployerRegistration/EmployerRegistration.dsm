@@ -1,0 +1,190 @@
+<Machine IsPublic="False" IsExternal="False" RequirePersonID="False" RequireAgencyID="False" StartState="Introduction">
+  <States>
+    <Operation Name="ValidateIntroduction" Service="Premium.Registration.EmployerRegistration" Operation="ValidateIntroduction" ResultProperty="EmployerRegistration">
+      <Parameters>
+        <Parameter DataSource="EmployerRegistration" />
+      </Parameters>
+      <Transitions>
+        <State Name="Next" IsDefault="False" State="LiabilityWages" />
+      </Transitions>
+    </Operation>
+    <Page Name="Introduction">
+      <Transitions>
+        <State Name="Next" IsDefault="False" IgnoreData="False" State="ValidateIntroduction" />
+      </Transitions>
+    </Page>
+    <Page Name="LiabilityWages">
+      <Transitions>
+        <State Name="Next" IsDefault="False" IgnoreData="False" State="IsLiableWagesCheck" />
+        <State Name="Previous" IsDefault="False" IgnoreData="True" State="Introduction" />
+      </Transitions>
+    </Page>
+    <Page Name="LiabilityWeeks">
+      <Transitions>
+        <State Name="Previous" IsDefault="False" IgnoreData="True" State="LiabilityWages" />
+        <State Name="Next" IsDefault="False" IgnoreData="False" State="IsLiableWeeksCheck" />
+      </Transitions>
+    </Page>
+    <Page Name="AdminInfo">
+      <Transitions>
+        <State Name="Next" IsDefault="False" IgnoreData="False" State="ValidateAdminInfo" />
+        <State Name="Previous" IsDefault="False" IgnoreData="True" State="IsLiableWagesCheckPrevious" />
+      </Transitions>
+    </Page>
+    <Operation Name="ValidateAdminInfo" Service="Premium.Registration.EmployerRegistration" Operation="ValidateAdminInfo" ResultProperty="EmployerRegistration">
+      <Parameters>
+        <Parameter DataSource="EmployerRegistration" />
+      </Parameters>
+      <Transitions>
+        <State Name="Next" IsDefault="False" State="EmpIdentification" />
+      </Transitions>
+    </Operation>
+    <Page Name="EmpIdentification">
+      <Transitions>
+        <State Name="Next" IsDefault="False" IgnoreData="False" State="ValidateEmpIdentification" />
+        <State Name="Previous" IsDefault="False" IgnoreData="True" State="AdminInfo" />
+      </Transitions>
+    </Page>
+    <Operation Name="ValidateEmpIdentification" Service="Premium.Registration.EmployerRegistration" Operation="ValidateEmpIdentification" ResultProperty="EmployerRegistration">
+      <Parameters>
+        <Parameter DataSource="EmployerRegistration" />
+      </Parameters>
+      <Transitions>
+        <State Name="Next" IsDefault="False" State="EnterBusinessInfo" />
+      </Transitions>
+    </Operation>
+    <Decision Name="IsLiableWagesCheck" DataSource="IsLiableWages">
+      <Transitions>
+        <State Name="No" IsDefault="False" State="LiabilityWeeks">
+          <DecisionValues>
+            <DecisionValue Value="No" />
+          </DecisionValues>
+        </State>
+        <State Name="Yes" IsDefault="False" State="AdminInfo">
+          <DecisionValues>
+            <DecisionValue Value="Yes" />
+          </DecisionValues>
+        </State>
+      </Transitions>
+    </Decision>
+    <Page Name="EnterBusinessInfo">
+      <Transitions>
+        <State Name="Previous" IsDefault="False" IgnoreData="True" State="EmpIdentification" />
+        <State Name="Next" IsDefault="False" IgnoreData="False" State="ValidateEnterBusinessInfo" />
+      </Transitions>
+    </Page>
+    <Operation Name="ValidateEnterBusinessInfo" Service="Premium.Registration.EmployerRegistration" Operation="ValidateEnterBusinessInfo" ResultProperty="EmployerRegistration">
+      <Parameters>
+        <Parameter DataSource="EmployerRegistration" />
+      </Parameters>
+      <Transitions>
+        <State Name="Next" IsDefault="False" State="EnterBusinessInfoCont" />
+      </Transitions>
+    </Operation>
+    <Page Name="EnterBusinessInfoCont">
+      <Transitions>
+        <State Name="Previous" IsDefault="False" IgnoreData="True" State="EnterBusinessInfo" />
+        <State Name="Next" IsDefault="False" IgnoreData="False" State="ValidateEnterBusinessInfoCont" />
+      </Transitions>
+    </Page>
+    <Page Name="EnterPhysicalAddr">
+      <Transitions>
+        <State Name="Next" IsDefault="False" IgnoreData="False" State="ValidateEnterPhysicalAddr" />
+        <State Name="Previous" IsDefault="False" IgnoreData="True" State="EnterBusinessInfoCont" />
+      </Transitions>
+    </Page>
+    <Page Name="EnterBusiRcdsAddr">
+      <Transitions>
+        <State Name="Next" IsDefault="False" IgnoreData="False" State="ValidateEnterBusiRcdsAddr" />
+        <State Name="Previous" IsDefault="False" IgnoreData="True" State="EnterPhysicalAddr" />
+      </Transitions>
+    </Page>
+    <Page Name="RegistrationSummary">
+      <Transitions>
+        <State Name="Submit" IsDefault="False" IgnoreData="False" State="SubmitRegistration" />
+        <State Name="Previous" IsDefault="False" IgnoreData="True" State="EnterBusiRcdsAddr" />
+      </Transitions>
+    </Page>
+    <Operation Name="ValidateEnterBusinessInfoCont" Service="Premium.Registration.EmployerRegistration" Operation="ValidateEnterBusinessInfoCont" ResultProperty="EmployerRegistration">
+      <Parameters>
+        <Parameter DataSource="EmployerRegistration" />
+      </Parameters>
+      <Transitions>
+        <State Name="Next" IsDefault="False" State="EnterPhysicalAddr" />
+      </Transitions>
+    </Operation>
+    <Page Name="EmpDeterContrib">
+      <Transitions>
+        <State Name="Home" IsDefault="False" IgnoreData="False" State="Home" />
+      </Transitions>
+    </Page>
+    <Operation Name="SubmitRegistration" Service="Premium.Registration.EmployerRegistration" Operation="SubmitRegistration" ResultProperty="EmployerRegistration">
+      <Parameters>
+        <Parameter DataSource="EmployerRegistration" />
+      </Parameters>
+      <Transitions>
+        <State Name="Next" IsDefault="False" State="EmpDeterContrib" />
+      </Transitions>
+    </Operation>
+    <Operation Name="ValidateEnterBusiRcdsAddr" Service="Premium.Registration.EmployerRegistration" Operation="ValidateEnterBusiRcdsAddr" ResultProperty="EmployerRegistration">
+      <Parameters>
+        <Parameter DataSource="EmployerRegistration" />
+      </Parameters>
+      <Transitions>
+        <State Name="Next" IsDefault="False" State="RegistrationSummary" />
+      </Transitions>
+    </Operation>
+    <Operation Name="ValidateEnterPhysicalAddr" Service="Premium.Registration.EmployerRegistration" Operation="ValidateEnterPhysicalAddr" ResultProperty="EmployerRegistration">
+      <Parameters>
+        <Parameter DataSource="EmployerRegistration" />
+      </Parameters>
+      <Transitions>
+        <State Name="Next" IsDefault="False" State="EnterBusiRcdsAddr" />
+      </Transitions>
+    </Operation>
+    <Transfer Name="Home" Machine="Home" OneWay="True" />
+    <Decision Name="IsLiableWagesCheckPrevious" DataSource="IsLiableWages">
+      <Transitions>
+        <State Name="No" IsDefault="False" State="LiabilityWeeks">
+          <DecisionValues>
+            <DecisionValue Value="No" />
+          </DecisionValues>
+        </State>
+        <State Name="Yes" IsDefault="False" State="LiabilityWages">
+          <DecisionValues>
+            <DecisionValue Value="Yes" />
+          </DecisionValues>
+        </State>
+      </Transitions>
+    </Decision>
+    <Operation Name="ValidateLiabilityWeeks" Service="Premium.Registration.EmployerRegistration" Operation="ValidateLiabilityWeeks" ResultProperty="EmployerRegistration">
+      <Parameters>
+        <Parameter DataSource="EmployerRegistration" />
+      </Parameters>
+      <Transitions>
+        <State Name="Next" IsDefault="False" State="AdminInfo" />
+      </Transitions>
+    </Operation>
+    <Decision Name="IsLiableWeeksCheck" DataSource="IsLiableWeeks">
+      <Transitions>
+        <State Name="Yes" IsDefault="False" State="ValidateLiabilityWeeks">
+          <DecisionValues>
+            <DecisionValue Value="Yes" />
+          </DecisionValues>
+        </State>
+        <State Name="No" IsDefault="False" State="NotLiable">
+          <DecisionValues>
+            <DecisionValue Value="No" />
+          </DecisionValues>
+        </State>
+      </Transitions>
+    </Decision>
+    <Page Name="NotLiable">
+      <Transitions>
+        <State Name="Home" IsDefault="False" IgnoreData="False" State="Home" />
+        <State Name="Previous" IsDefault="False" IgnoreData="True" State="LiabilityWeeks" />
+      </Transitions>
+    </Page>
+  </States>
+  <Designer>Kj0iSXNSb3VuZGVkQ29ybmVycz1UcnVlCUJyaWRnZVR5cGU9Tm9uZSIAVmFsaWRhdGVJbnRyb2R1Y3Rpb249IkNvbG9yPSNGRjAwNzJDNglQb3NpdGlvbj0tMjgwLDgwIgBWYWxpZGF0ZUludHJvZHVjdGlvbi5OZXh0PSJMaW5lVHlwZT1TdHJhaWdodAlTb3VyY2VDb25uZWN0b3I9YzkJU3RhcnRQb2ludD0tMTk5Ljk5OTYsMTYwCUVuZFBvaW50PS0yMDAsMjgwCU1pZFBvaW50cz0tMjAwLjIsMjMzCVRhcmdldENvbm5lY3Rvcj1jMTIiAEludHJvZHVjdGlvbj0iQ29sb3I9I0ZGMDA3MkM2CVBvc2l0aW9uPS00MDAsMjQwIgBJbnRyb2R1Y3Rpb24uTmV4dD0iTGluZVR5cGU9U3RyYWlnaHQJU291cmNlQ29ubmVjdG9yPWM1CVN0YXJ0UG9pbnQ9LTI4MCwyNDAJRW5kUG9pbnQ9LTI4MCwxNjAJTWlkUG9pbnRzPS0yODAsMjIwCVRhcmdldENvbm5lY3Rvcj1jMTIiAExpYWJpbGl0eVdhZ2VzPSJDb2xvcj0jRkYwMDcyQzYJUG9zaXRpb249LTIwMCwyNDAiAExpYWJpbGl0eVdhZ2VzLk5leHQ9IkxpbmVUeXBlPVN0cmFpZ2h0CVNvdXJjZUNvbm5lY3Rvcj1jNQlTdGFydFBvaW50PS04MS4yMzA3NjkyMzA3NjkzLDI0MC4zMDc2OTIzMDc2OTIJRW5kUG9pbnQ9LTgwLDEyMAlUYXJnZXRDb25uZWN0b3I9YzEwIgBMaWFiaWxpdHlXYWdlcy5QcmV2aW91cz0iTGluZVR5cGU9U3RyYWlnaHQJU291cmNlQ29ubmVjdG9yPWMxNAlTdGFydFBvaW50PS0xODgsMzAwCUVuZFBvaW50PS0yODAsMzAwCVRhcmdldENvbm5lY3Rvcj1jMTciAExpYWJpbGl0eVdlZWtzPSJDb2xvcj0jRkYwMDcyQzYJUG9zaXRpb249MTIwLDgwIgBMaWFiaWxpdHlXZWVrcy5QcmV2aW91cz0iTGluZVR5cGU9U3RyYWlnaHQJU291cmNlQ29ubmVjdG9yPWMxCVN0YXJ0UG9pbnQ9MTU5Ljk5OTYsODAJRW5kUG9pbnQ9LTE0MCwyNDAJTWlkUG9pbnRzPTE2MCwyMCAtMTQwLDIwCVRhcmdldENvbm5lY3Rvcj1jMCIATGlhYmlsaXR5V2Vla3MuTmV4dD0iTGluZVR5cGU9U3RyYWlnaHQJU291cmNlQ29ubmVjdG9yPWM0CVN0YXJ0UG9pbnQ9MjE5Ljk5OTYsODAJRW5kUG9pbnQ9NDgwLC04MAlNaWRQb2ludHM9MjIwLC0xMDAgNDgwLC0xMDAJVGFyZ2V0Q29ubmVjdG9yPWMwIgBBZG1pbkluZm89IkNvbG9yPSNGRjAwNzJDNglQb3NpdGlvbj00MCwyNDAiAEFkbWluSW5mby5OZXh0PSJMaW5lVHlwZT1TdHJhaWdodAlTb3VyY2VDb25uZWN0b3I9YzE1CVN0YXJ0UG9pbnQ9MTYwLDI4MAlFbmRQb2ludD0zNDAuMDAwNCwxNjAJTWlkUG9pbnRzPTM0MCwyODAJVGFyZ2V0Q29ubmVjdG9yPWMxMCIAQWRtaW5JbmZvLlByZXZpb3VzPSJMaW5lVHlwZT1TdHJhaWdodAlTb3VyY2VDb25uZWN0b3I9YzgJU3RhcnRQb2ludD0xMjAuMDAwNCwzMjAJRW5kUG9pbnQ9MTIwLDQyMAlUYXJnZXRDb25uZWN0b3I9YzEwIgBWYWxpZGF0ZUFkbWluSW5mbz0iQ29sb3I9I0ZGMDA3MkM2CVBvc2l0aW9uPTMyMCw4MCIAVmFsaWRhdGVBZG1pbkluZm8uTmV4dD0iTGluZVR5cGU9U3RyYWlnaHQJU291cmNlQ29ubmVjdG9yPWMxMwlTdGFydFBvaW50PTQ0MCwxNjAJRW5kUG9pbnQ9NDQwLDI4MAlUYXJnZXRDb25uZWN0b3I9YzEyIgBFbXBJZGVudGlmaWNhdGlvbj0iQ29sb3I9I0ZGMDA3MkM2CVBvc2l0aW9uPTQ0MCwyNDAiAEVtcElkZW50aWZpY2F0aW9uLk5leHQ9IkxpbmVUeXBlPVN0cmFpZ2h0CVNvdXJjZUNvbm5lY3Rvcj1jNAlTdGFydFBvaW50PTUzOS45OTk2LDI0MAlFbmRQb2ludD01NDAsMTYwCU1pZFBvaW50cz01NDAsMjIwCVRhcmdldENvbm5lY3Rvcj1jMTIiAEVtcElkZW50aWZpY2F0aW9uLlByZXZpb3VzPSJMaW5lVHlwZT1TdHJhaWdodAlTb3VyY2VDb25uZWN0b3I9YzE0CVN0YXJ0UG9pbnQ9NDUyLDMwMAlFbmRQb2ludD0xNjAsMzAwCVRhcmdldENvbm5lY3Rvcj1BdXRvIgBWYWxpZGF0ZUVtcElkZW50aWZpY2F0aW9uPSJDb2xvcj0jRkYwMDcyQzYJUG9zaXRpb249NTQwLDgwIgBWYWxpZGF0ZUVtcElkZW50aWZpY2F0aW9uLk5leHQ9IkxpbmVUeXBlPVN0cmFpZ2h0CVNvdXJjZUNvbm5lY3Rvcj1jMTEJU3RhcnRQb2ludD02MzkuOTk5NiwxNjAJRW5kUG9pbnQ9NjQwLDI4MAlNaWRQb2ludHM9NjQwLDIyMAlUYXJnZXRDb25uZWN0b3I9YzEyIgBJc0xpYWJsZVdhZ2VzQ2hlY2s9IkNvbG9yPSNGRjAwNzJDNglQb3NpdGlvbj0tODAsODAiAElzTGlhYmxlV2FnZXNDaGVjay5Obz0iTGluZVR5cGU9U3RyYWlnaHQJU291cmNlQ29ubmVjdG9yPUF1dG8JU3RhcnRQb2ludD00MCwxMjAJRW5kUG9pbnQ9MTIwLDEyMAlUYXJnZXRDb25uZWN0b3I9QXV0byIASXNMaWFibGVXYWdlc0NoZWNrLlllcz0iTGluZVR5cGU9U3RyYWlnaHQJU291cmNlQ29ubmVjdG9yPWM1CVN0YXJ0UG9pbnQ9LTIwLDE2MAlFbmRQb2ludD00MCwyODAJTWlkUG9pbnRzPS0yMCwyODAJVGFyZ2V0Q29ubmVjdG9yPWMxMiIARW50ZXJCdXNpbmVzc0luZm89IkNvbG9yPSNGRjAwNzJDNglQb3NpdGlvbj02NDAsMjQwIgBFbnRlckJ1c2luZXNzSW5mby5QcmV2aW91cz0iTGluZVR5cGU9U3RyYWlnaHQJU291cmNlQ29ubmVjdG9yPWMxNAlTdGFydFBvaW50PTY1MiwzMDAJRW5kUG9pbnQ9NTYwLDMwMAlUYXJnZXRDb25uZWN0b3I9YzE3IgBFbnRlckJ1c2luZXNzSW5mby5OZXh0PSJMaW5lVHlwZT1TdHJhaWdodAlTb3VyY2VDb25uZWN0b3I9YzQJU3RhcnRQb2ludD03MzkuOTk5NiwyNDAJRW5kUG9pbnQ9NzQwLDE2MAlUYXJnZXRDb25uZWN0b3I9YzEyIgBWYWxpZGF0ZUVudGVyQnVzaW5lc3NJbmZvPSJDb2xvcj0jRkYwMDcyQzYJUG9zaXRpb249NzQwLDgwIgBWYWxpZGF0ZUVudGVyQnVzaW5lc3NJbmZvLk5leHQ9IkxpbmVUeXBlPVN0cmFpZ2h0CVNvdXJjZUNvbm5lY3Rvcj1jMTEJU3RhcnRQb2ludD04MzkuOTk5NiwxNjAJRW5kUG9pbnQ9ODQwLDI4MAlUYXJnZXRDb25uZWN0b3I9YzEyIgBFbnRlckJ1c2luZXNzSW5mb0NvbnQ9IkNvbG9yPSNGRjAwNzJDNglQb3NpdGlvbj04NDAsMjQwIgBFbnRlckJ1c2luZXNzSW5mb0NvbnQuUHJldmlvdXM9IkxpbmVUeXBlPVN0cmFpZ2h0CVNvdXJjZUNvbm5lY3Rvcj1jMTQJU3RhcnRQb2ludD04NTIsMzAwCUVuZFBvaW50PTc2MCwzMDAJVGFyZ2V0Q29ubmVjdG9yPWMxNyIARW50ZXJCdXNpbmVzc0luZm9Db250Lk5leHQ9IkxpbmVUeXBlPVN0cmFpZ2h0CVNvdXJjZUNvbm5lY3Rvcj1jNAlTdGFydFBvaW50PTkzOS45OTk2LDI0MAlFbmRQb2ludD05NDAsMTYwCVRhcmdldENvbm5lY3Rvcj1jMTIiAEVudGVyUGh5c2ljYWxBZGRyPSJDb2xvcj0jRkYwMDcyQzYJUG9zaXRpb249MTA0MCwyNDAiAEVudGVyUGh5c2ljYWxBZGRyLk5leHQ9IkxpbmVUeXBlPVN0cmFpZ2h0CVNvdXJjZUNvbm5lY3Rvcj1jNAlTdGFydFBvaW50PTExMzkuOTk5NiwyNDAJRW5kUG9pbnQ9MTE0MCwxNjAJVGFyZ2V0Q29ubmVjdG9yPWMxMiIARW50ZXJQaHlzaWNhbEFkZHIuUHJldmlvdXM9IkxpbmVUeXBlPVN0cmFpZ2h0CVNvdXJjZUNvbm5lY3Rvcj1jMTQJU3RhcnRQb2ludD0xMDUyLDMwMAlFbmRQb2ludD05NjAsMzAwCVRhcmdldENvbm5lY3Rvcj1jMTciAEVudGVyQnVzaVJjZHNBZGRyPSJDb2xvcj0jRkYwMDcyQzYJUG9zaXRpb249MTI0MCwyNDAiAEVudGVyQnVzaVJjZHNBZGRyLk5leHQ9IkxpbmVUeXBlPVN0cmFpZ2h0CVNvdXJjZUNvbm5lY3Rvcj1jNAlTdGFydFBvaW50PTEzMzkuOTk5NiwyNDAJRW5kUG9pbnQ9MTM0MCwxNjAJVGFyZ2V0Q29ubmVjdG9yPWMxMiIARW50ZXJCdXNpUmNkc0FkZHIuUHJldmlvdXM9IkxpbmVUeXBlPVN0cmFpZ2h0CVNvdXJjZUNvbm5lY3Rvcj1jMTQJU3RhcnRQb2ludD0xMjUyLDMwMAlFbmRQb2ludD0xMTYwLDMwMAlUYXJnZXRDb25uZWN0b3I9YzE3IgBSZWdpc3RyYXRpb25TdW1tYXJ5PSJDb2xvcj0jRkYwMDcyQzYJUG9zaXRpb249MTQ0MCwyNDAiAFJlZ2lzdHJhdGlvblN1bW1hcnkuU3VibWl0PSJMaW5lVHlwZT1TdHJhaWdodAlTb3VyY2VDb25uZWN0b3I9YzQJU3RhcnRQb2ludD0xNTM5Ljk5OTYsMjQwCUVuZFBvaW50PTE1NDAsMTYwCVRhcmdldENvbm5lY3Rvcj1jMTIiAFJlZ2lzdHJhdGlvblN1bW1hcnkuUHJldmlvdXM9IkxpbmVUeXBlPVN0cmFpZ2h0CVNvdXJjZUNvbm5lY3Rvcj1jMTQJU3RhcnRQb2ludD0xNDUyLDMwMAlFbmRQb2ludD0xMzYwLDMwMAlUYXJnZXRDb25uZWN0b3I9YzE3IgBWYWxpZGF0ZUVudGVyQnVzaW5lc3NJbmZvQ29udD0iQ29sb3I9I0ZGMDA3MkM2CVBvc2l0aW9uPTk0MCw4MCIAVmFsaWRhdGVFbnRlckJ1c2luZXNzSW5mb0NvbnQuTmV4dD0iTGluZVR5cGU9U3RyYWlnaHQJU291cmNlQ29ubmVjdG9yPWMxMQlTdGFydFBvaW50PTEwMzkuOTk5NiwxNjAJRW5kUG9pbnQ9MTA0MCwyODAJVGFyZ2V0Q29ubmVjdG9yPWMxMiIARW1wRGV0ZXJDb250cmliPSJDb2xvcj0jRkYwMDcyQzYJUG9zaXRpb249MTY0MCwyNDAiAEVtcERldGVyQ29udHJpYi5Ib21lPSJMaW5lVHlwZT1TdHJhaWdodAlTb3VyY2VDb25uZWN0b3I9YzE1CVN0YXJ0UG9pbnQ9MTc2MCwyODAJRW5kUG9pbnQ9MTg0MCwyODAJVGFyZ2V0Q29ubmVjdG9yPWMxMiIAU3VibWl0UmVnaXN0cmF0aW9uPSJDb2xvcj0jRkYwMDcyQzYJUG9zaXRpb249MTU0MCw4MCIAU3VibWl0UmVnaXN0cmF0aW9uLk5leHQ9IkxpbmVUeXBlPVN0cmFpZ2h0CVNvdXJjZUNvbm5lY3Rvcj1jMTEJU3RhcnRQb2ludD0xNjM5Ljk5OTYsMTYwCUVuZFBvaW50PTE2NDAsMjgwCVRhcmdldENvbm5lY3Rvcj1jMTIiAFZhbGlkYXRlRW50ZXJCdXNpUmNkc0FkZHI9IkNvbG9yPSNGRjAwNzJDNglQb3NpdGlvbj0xMzQwLDgwIgBWYWxpZGF0ZUVudGVyQnVzaVJjZHNBZGRyLk5leHQ9IkxpbmVUeXBlPVN0cmFpZ2h0CVNvdXJjZUNvbm5lY3Rvcj1jMTEJU3RhcnRQb2ludD0xNDM5Ljk5OTYsMTYwCUVuZFBvaW50PTE0NDAsMjgwCVRhcmdldENvbm5lY3Rvcj1jMTIiAFZhbGlkYXRlRW50ZXJQaHlzaWNhbEFkZHI9IkNvbG9yPSNGRjAwNzJDNglQb3NpdGlvbj0xMTQwLDgwIgBWYWxpZGF0ZUVudGVyUGh5c2ljYWxBZGRyLk5leHQ9IkxpbmVUeXBlPVN0cmFpZ2h0CVNvdXJjZUNvbm5lY3Rvcj1jMTEJU3RhcnRQb2ludD0xMjM5Ljk5OTYsMTYwCUVuZFBvaW50PTEyNDAsMjgwCVRhcmdldENvbm5lY3Rvcj1jMTIiAEhvbWU9IkNvbG9yPSNGRjAwNzJDNglQb3NpdGlvbj0xODQwLDI0MCIASXNMaWFibGVXYWdlc0NoZWNrUHJldmlvdXM9IkNvbG9yPSNGRjAwNzJDNglQb3NpdGlvbj0xMjAsMzgwIgBJc0xpYWJsZVdhZ2VzQ2hlY2tQcmV2aW91cy5Obz0iTGluZVR5cGU9U3RyYWlnaHQJU291cmNlQ29ubmVjdG9yPWMxMwlTdGFydFBvaW50PTI0MCw0MjAJRW5kUG9pbnQ9MTgwLDgwCU1pZFBvaW50cz0yNDAsNDgwIC00NjAsNDgwIC00NjAsMCAxODAsMAlUYXJnZXRDb25uZWN0b3I9YzAiAElzTGlhYmxlV2FnZXNDaGVja1ByZXZpb3VzLlllcz0iTGluZVR5cGU9U3RyYWlnaHQJU291cmNlQ29ubmVjdG9yPWM1CVN0YXJ0UG9pbnQ9MTgwLDQ2MAlFbmRQb2ludD0tMTE5Ljk5OTYsMzIwCU1pZFBvaW50cz0tMTIwLDQ2MAlUYXJnZXRDb25uZWN0b3I9YzgiAFZhbGlkYXRlTGlhYmlsaXR5V2Vla3M9IkNvbG9yPSNGRjAwNzJDNglQb3NpdGlvbj0yNDAsLTgwIgBWYWxpZGF0ZUxpYWJpbGl0eVdlZWtzLk5leHQ9IkxpbmVUeXBlPVN0cmFpZ2h0CVNvdXJjZUNvbm5lY3Rvcj1jNwlTdGFydFBvaW50PTMwMCwwCUVuZFBvaW50PTE2MCwyNjAJTWlkUG9pbnRzPTMwMCwyNjAJVGFyZ2V0Q29ubmVjdG9yPWMxNiIASXNMaWFibGVXZWVrc0NoZWNrPSJDb2xvcj0jRkYwMDcyQzYJUG9zaXRpb249NDIwLC04MCIASXNMaWFibGVXZWVrc0NoZWNrLlllcz0iTGluZVR5cGU9U3RyYWlnaHQJU291cmNlQ29ubmVjdG9yPWMxMAlTdGFydFBvaW50PTAsMAlFbmRQb2ludD0zNjAsLTQwCVRhcmdldENvbm5lY3Rvcj1jMTciAElzTGlhYmxlV2Vla3NDaGVjay5Obz0iTGluZVR5cGU9U3RyYWlnaHQJU291cmNlQ29ubmVjdG9yPWMxMwlTdGFydFBvaW50PTU0MCwtNDAJRW5kUG9pbnQ9NjIwLC00MAlUYXJnZXRDb25uZWN0b3I9YzEyIgBOb3RMaWFibGU9IkNvbG9yPSNGRjAwNzJDNglQb3NpdGlvbj02MjAsLTgwIgBOb3RMaWFibGUuSG9tZT0iTGluZVR5cGU9U3RyYWlnaHQJU291cmNlQ29ubmVjdG9yPWMxNQlTdGFydFBvaW50PTc0MCwtNDAJRW5kUG9pbnQ9MTkwMCwyNDAJTWlkUG9pbnRzPTE5MDAsLTQwCVRhcmdldENvbm5lY3Rvcj1jMCIATm90TGlhYmxlLlByZXZpb3VzPSJMaW5lVHlwZT1TdHJhaWdodAlTb3VyY2VDb25uZWN0b3I9YzAJU3RhcnRQb2ludD02ODAsLTgwCUVuZFBvaW50PTIwMC4wMDA0LDgwCU1pZFBvaW50cz02ODAsLTE0MCAyMDAsLTE0MAlUYXJnZXRDb25uZWN0b3I9YzIi</Designer>
+</Machine>
