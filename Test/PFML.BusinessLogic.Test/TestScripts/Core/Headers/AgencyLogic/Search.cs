@@ -112,17 +112,7 @@ namespace PFML.BusinessLogic.Test.TestScripts.Core.Headers.AgencyLogic
             //LogHelper.Log("Person age is " + age.ToString() + " and can drink is " + result.ToString() + Environment.NewLine);
             LogHelper.Log(LoggingLevel.Info, "Person age is " + age.ToString() + " and can drink is " + result.ToString(), null, this);
 
-            try
-            {
-                int x = 0;
-                var res = 5 / x;
-            }
-            catch (Exception ex)
-            {
-                LogHelper.Log(LoggingLevel.Error, string.Empty, ex, this);
-                throw;
-            }
-
+           
             //******assert******
             Assert.Equal(expectedResult, result);
         }
