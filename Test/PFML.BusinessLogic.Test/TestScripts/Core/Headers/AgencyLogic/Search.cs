@@ -65,56 +65,56 @@ namespace PFML.BusinessLogic.Test.TestScripts.Core.Headers.AgencyLogic
     public class SampleTestWithXBehave : IClassFixture<TestFixture>
     {
         //xBehaviour example.
-        [Scenario]
-        [Example(1, 2, 3)]
-        [Example(2, 3, 5)]
-        public void Addition(int x, int y, int expectedAnswer, Search calculator, int answer)
-        {
-            $"Given the number {x}"
-                .x(() => { });
+        //[Scenario]
+        //[Example(1, 2, 3)]
+        //[Example(2, 3, 5)]
+        //public void Addition(int x, int y, int expectedAnswer, Search calculator, int answer)
+        //{
+        //    $"Given the number {x}"
+        //        .x(() => { });
 
-            $"And the number {y}"
-                .x(() => { });
+        //    $"And the number {y}"
+        //        .x(() => { });
 
-            "And a calculator"
-                .x(() => calculator = new Search());
+        //    "And a calculator"
+        //        .x(() => calculator = new Search());
 
-            "When I add the numbers together"
-                .x(() => answer = calculator.Add(x, y));
+        //    "When I add the numbers together"
+        //        .x(() => answer = calculator.Add(x, y));
 
-            $"Then the answer is {answer}"
-                .x(() => Assert.Equal(expectedAnswer, answer));
+        //    $"Then the answer is {answer}"
+        //        .x(() => Assert.Equal(expectedAnswer, answer));
 
-            //log.Error("Application started");
-        }
+        //    //log.Error("Application started");
+        //}
 
 
         //xUnit example.
-        [Theory]
-        [InlineData(50, true)]
-        [InlineData(51, true)]
-        [InlineData(19, false)]
-        public void UserCanDrink_UserIsOfAge_ReturnsTrue(int age, bool expectedResult)
-        {
-            //******arrange******
-            //No need of actual datasource, just mock it.
-            var dataSource = new Mock<IDataSource>();
-            var person = new Person() { Age = age };
+        //[Theory]
+        //[InlineData(50, true)]
+        //[InlineData(51, true)]
+        //[InlineData(19, false)]
+        //public void UserCanDrink_UserIsOfAge_ReturnsTrue(int age, bool expectedResult)
+        //{
+        //    //******arrange******
+        //    //No need of actual datasource, just mock it.
+        //    var dataSource = new Mock<IDataSource>();
+        //    var person = new Person() { Age = age };
 
-            //In reality this function (GetUser) gets the user from datasource. 
-            //But here we dont really need to get it from the datasource.
-            dataSource.Setup(d => d.GetUser(default(int))).Returns(person);
+        //    //In reality this function (GetUser) gets the user from datasource. 
+        //    //But here we dont really need to get it from the datasource.
+        //    dataSource.Setup(d => d.GetUser(default(int))).Returns(person);
 
-            BusinessLogic bl = new BusinessLogic(dataSource.Object);
+        //    BusinessLogic bl = new BusinessLogic(dataSource.Object);
 
-            //******act******
-            var result = bl.PersonCanDrink(default(int));
-            //LogHelper.Log("Person age is " + age.ToString() + " and can drink is " + result.ToString() + Environment.NewLine);
-            LogHelper.Log(LoggingLevel.Info, "Person age is " + age.ToString() + " and can drink is " + result.ToString(), null, this);
+        //    //******act******
+        //    var result = bl.PersonCanDrink(default(int));
+        //    //LogHelper.Log("Person age is " + age.ToString() + " and can drink is " + result.ToString() + Environment.NewLine);
+        //    LogHelper.Log(LoggingLevel.Info, "Person age is " + age.ToString() + " and can drink is " + result.ToString(), null, this);
 
            
-            //******assert******
-            Assert.Equal(expectedResult, result);
-        }
+        //    //******assert******
+        //    Assert.Equal(expectedResult, result);
+        //}
     }
 }
